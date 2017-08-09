@@ -1,0 +1,34 @@
+{
+  "name": "redux-chunk",
+  "version": "1.0.0",
+  "description": "📤 A redux library to declaratively interact with any API",
+  "main": "dist/index.js",
+  "scripts": {
+    "prepublish": "npm run build",
+    "build": "babel src --out-dir dist",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/onlicar/redux-chunk.git"
+  },
+  "keywords": [
+    "redux",
+    "api"
+  ],
+  "author": "Dan Bovey <dan@onlicar.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/onlicar/redux-chunk/issues"
+  },
+  "homepage": "https://github.com/onlicar/redux-chunk#readme",
+  "dependencies": {
+    "object-path-immutable": "^0.5.1",
+    "query-string": "^5.0.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-preset-es2015": "^6.24.1"
+  }
+}
