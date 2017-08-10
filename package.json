@@ -16,6 +16,9 @@
     "redux",
     "api"
   ],
+  "files": [
+    "dist"
+  ],
   "author": "Dan Bovey <dan@onlicar.com>",
   "license": "MIT",
   "bugs": {
