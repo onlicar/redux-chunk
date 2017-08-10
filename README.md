@@ -14,7 +14,7 @@ npm install redux-chunk --save
 
 ## Usage
 
-You can use Redux Chunk into your existing Redux app by following these steps:
+You can use Redux Chunk in your existing Redux app by following these steps:
 
 #### Add the redux-chunk reducer and middleware to your Redux store
 
