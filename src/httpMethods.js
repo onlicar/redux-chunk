@@ -1,4 +1,4 @@
-const allArgs = (...args) => ({
+const allArgs = args => ({
     placeholders: args.length >= 2 ? args[0] : {},
     body: args.length >= 2 ? args[1] : args[0],
     options: args.length == 3 ? args[2] : {}
