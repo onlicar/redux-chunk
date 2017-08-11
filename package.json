@@ -1,6 +1,6 @@
 {
   "name": "redux-chunk",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "📤 A redux library to declaratively interact with any API",
   "main": "dist/index.js",
   "scripts": {
