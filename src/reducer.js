@@ -41,7 +41,7 @@ export default function reducer(state = {}, action) {
                 newState = immutable.del(newState, param('headers'));
                 newState = immutable.del(newState, param('status'));
             } else {
-                const { error, headers, status } = action.payload;
+                const { body, headers, status } = action.payload;
                 newState = immutable.set(newState, param('error'), body);
                 newState = immutable.set(newState, param('headers'), headers);
                 newState = immutable.set(newState, param('status'), status);
