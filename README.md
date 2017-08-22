@@ -28,7 +28,7 @@ import {
 
 const reducer = combineReducers({
   // ...your other reducers
-  bees: beesReducer,
+  api: apiReducer,
 });
 
 const store = createStore(reducer, applyMiddleware(apiMiddleware));
