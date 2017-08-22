@@ -70,11 +70,13 @@ export default class API {
             }
 
             const createRequest = () => {
-                const req = request(
-                    this.config.baseUrl,
-                    applyUrlWithPlaceholders(path, placeholders),
-                    this.config.configureOptions(augmentedOptions)
-                );
+                const opts = this.config.configureOptions(augmentedOptions);
+                const phlds = applyUrlWithPlaceholders(path, placeholders);
+                const req = request(this.config.baseUrl, phlds, opts);
+
+                req.placeholders = phlds;
+                req.config = opts;
+                req.retry = () => createRequest();
 
                 this.pendingPromises[promiseId] = req;
 
@@ -92,8 +94,6 @@ export default class API {
 
                 promise.actionName = name;
                 promise.params = args;
-                
-                promise.retry = () => createRequest();
                 
                 return promise;
             };
