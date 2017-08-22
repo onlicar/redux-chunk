@@ -3,6 +3,8 @@ import applyUrlWithPlaceholders from './applyUrlWithPlaceholders';
 import request from './request';
 
 const defaultConfigure = options => options;
+const defaultHandleResolve = (req, res) => Promise.resolve(res);
+const defaultHandleReject = (req, err) => Promise.reject(err);
 
 export { get, post, destroy } from './httpMethods';
 export { default as middleware } from './middleware';
@@ -14,7 +16,9 @@ export default class API {
         this.config = {
             ...config,
             configureOptions: config.configureOptions || defaultConfigure,
-            configureHeaders: config.configureHeaders || defaultConfigure
+            configureHeaders: config.configureHeaders || defaultConfigure,
+            handleResolve: config.handleResolve || defaultHandleResolve,
+            handleReject: config.handleReject || defaultHandleReject
         };
 
         this.pendingPromises = {};
@@ -65,28 +69,36 @@ export default class API {
                 return this.pendingPromises[promiseId];
             }
 
-            const req = request(
-                this.config.baseUrl,
-                applyUrlWithPlaceholders(path, placeholders),
-                this.config.configureOptions(augmentedOptions)
-            );
+            const createRequest = () => {
+                const req = request(
+                    this.config.baseUrl,
+                    applyUrlWithPlaceholders(path, placeholders),
+                    this.config.configureOptions(augmentedOptions)
+                );
 
-            this.pendingPromises[promiseId] = req;
+                this.pendingPromises[promiseId] = req;
 
-            const promise = req
-                .then(res => {
-                    delete this.pendingPromises[promiseId];
-                    return res;
-                })
-                .catch(err => {
-                    delete this.pendingPromises[promiseId];
-                    return Promise.reject(err);
-                });
+                const promise = req
+                    .then(res => this.config.handleResolve(req, res))
+                    .then(res => {
+                        delete this.pendingPromises[promiseId];
+                        return res;
+                    })
+                    .catch(err => {
+                        delete this.pendingPromises[promiseId];
+                        return Promise.reject(err);
+                    })
+                    .catch(err => this.config.handleReject(req, err));
 
-            promise.actionName = name;
-            promise.params = args;
+                promise.actionName = name;
+                promise.params = args;
+                
+                promise.retry = () => createRequest();
+                
+                return promise;
+            };
 
-            return promise;
+            return createRequest();
         };
         
         this[name].actionName = name;

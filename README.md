@@ -62,6 +62,26 @@ const api = new API(endpoints, options);
 export default api;
 ```
 
+#### Resolve/Reject middleware
+
+If you need to execute specific code before or after every request or retry a request if a particular response is returned, you can use the `handleResolve` and `handleReject` options:
+
+```js
+const options = {
+    baseUrl: 'https://api.example.com',
+    handleResolve: (req, res) => {
+        // Only return the result, the request is given to you here for checking sent placeholders or headers
+        return Promise.resolve({ ...res, extra: 'thing' });
+    },
+    handleReject: (req, res) => {
+        if(res.body.message.indexOf('Access Token Expired') > -1) {
+            // Refresh the access token then retry the request using .retry() method
+            return req.retry();
+        }
+    }
+};
+```
+
 #### You can then perform API actions like this:
 
 ```js
