@@ -6,7 +6,7 @@ const defaultConfigure = options => options;
 const defaultHandleResolve = (req, res) => Promise.resolve(res);
 const defaultHandleReject = (req, err) => Promise.reject(err);
 
-export { get, post, destroy } from './httpMethods';
+export { get, post, patch, put, destroy } from './httpMethods';
 export { default as middleware } from './middleware';
 export { default as query } from './query';
 export { default as reducer } from './reducer';
