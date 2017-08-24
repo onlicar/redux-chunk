@@ -123,7 +123,7 @@ api.getItem({ id: 12, custom: 'query' });
 api.createItem({ name: 'my-item', price: 100 });
 // POST https://api.example.com/items
 
-api.updateItem({ id: 12, price: 200 });
+api.updateItem({ id: 12 }, { price: 200 });
 // PATCH https://api.example/items/12
 
 api.deleteItem({ id: 12 });
