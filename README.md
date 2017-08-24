@@ -78,6 +78,8 @@ const options = {
             // Refresh the access token then retry the request using .retry() method
             return req.retry();
         }
+        
+        return res;
     }
 };
 ```
