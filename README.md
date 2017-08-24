@@ -79,7 +79,7 @@ const options = {
             return req.retry();
         }
         
-        return res;
+        return Promise.reject(res);
     }
 };
 ```
