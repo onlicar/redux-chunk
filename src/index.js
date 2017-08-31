@@ -71,10 +71,14 @@ export default class API {
 
             const createRequest = () => {
                 const opts = this.config.configureOptions(augmentedOptions);
-                const phlds = applyUrlWithPlaceholders(path, placeholders);
-                const req = request(this.config.baseUrl, phlds, opts);
+                const reqPath = applyUrlWithPlaceholders(path, placeholders);
+                let baseUrl = this.config.baseUrl;
+                if(typeof baseUrl == 'function') {
+                    baseUrl = baseUrl(path, placeholders);
+                }
+                const req = request(baseUrl, reqPath, opts);
 
-                req.placeholders = phlds;
+                req.placeholders = reqPath;
                 req.config = opts;
                 req.retry = () => createRequest();
 

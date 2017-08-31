@@ -62,6 +62,19 @@ const api = new API(endpoints, options);
 export default api;
 ```
 
+### Dynamic Base URL
+
+```js
+
+const options = {
+    baseUrl: (path, placeholders) =>
+        path.indexOf('other-api') > -1
+            ? 'https:://other.example.com'
+            : 'https://api.example.com'
+    }
+};
+```
+
 #### Resolve/Reject middleware
 
 If you need to execute specific code before or after every request or retry a request if a particular response is returned, you can use the `handleResolve` and `handleReject` options:
