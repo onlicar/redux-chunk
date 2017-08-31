@@ -27,7 +27,12 @@ export default class API {
     }
 
     createEndpoint(name, endpoint) {
-        const { path, required, method: methodConfig } = endpoint;
+        const {
+            path,
+            required,
+            method: methodConfig,
+            baseUrl: endpointBaseUrl
+        } = endpoint;
 
         // Create list of required placeholders
         const requiredPlaceholders = required || [];
@@ -73,7 +78,9 @@ export default class API {
                 const opts = this.config.configureOptions(augmentedOptions);
                 const reqPath = applyUrlWithPlaceholders(path, placeholders);
                 let baseUrl = this.config.baseUrl;
-                if(typeof baseUrl == 'function') {
+                if(endpointBaseUrl) {
+                    baseUrl = endpointBaseUrl;
+                } else if(typeof baseUrl == 'function') {
                     baseUrl = baseUrl(path, placeholders);
                 }
                 const req = request(baseUrl, reqPath, opts);
