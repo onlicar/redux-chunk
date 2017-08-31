@@ -19,7 +19,7 @@ const applyUrlWithPlaceholders = (url, placeholders) => {
         }
 
         // Else, we place the key value into the query string
-        if(placeholders[key]) {
+        if(typeof placeholders[key] != 'undefined') {
             query[key] = placeholders[key];
         }
 
