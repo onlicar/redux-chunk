@@ -71,7 +71,6 @@ const options = {
         path.indexOf('other-api') > -1
             ? 'https:://other.example.com'
             : 'https://api.example.com'
-    }
 };
 ```
 
