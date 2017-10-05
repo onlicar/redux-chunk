@@ -50,15 +50,6 @@ export default class API {
             const placeholders = args.placeholders || {};
             const options = args.options || {};
 
-            const augmentedOptions = {
-                ...options,
-                headers: this.config.configureHeaders({
-                    'Content-Type': 'appication/json',
-                    Accept: 'application/json',
-                    ...options.headers
-                })
-            };
-
             const missingPlaceholders = requiredPlaceholders.filter(name => !placeholders[name]);
             if(missingPlaceholders.length) {
                 console.error(`The ${name} API call cannot be performed. The following params were not specified: ${missingPlaceholders.join(', ')}`);
@@ -75,6 +66,15 @@ export default class API {
             }
 
             const createRequest = () => {
+                const augmentedOptions = {
+                    ...options,
+                    headers: this.config.configureHeaders({
+                        'Content-Type': 'appication/json',
+                        Accept: 'application/json',
+                        ...options.headers
+                    })
+                };
+                
                 const opts = this.config.configureOptions(augmentedOptions);
                 const reqPath = applyUrlWithPlaceholders(path, placeholders);
                 let baseUrl = this.config.baseUrl;
