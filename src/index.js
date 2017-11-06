@@ -69,7 +69,7 @@ export default class API {
                 const augmentedOptions = {
                     ...options,
                     headers: this.config.configureHeaders({
-                        'Content-Type': 'appication/json',
+                        'Content-Type': 'application/json',
                         Accept: 'application/json',
                         ...options.headers
                     })
